@@ -1,7 +1,7 @@
 const commonFunctions = require('../commonFunctions');
 
 
-class BeatmapObject {
+class ScoreObject {
     constructor(scores) {
         this.score = scores[0];  // scores[0]好像就是最高分数，如果有误再修改
     }
@@ -13,7 +13,7 @@ class BeatmapObject {
         const combo = this.score.maxCombo;
         const mods = cf.getScoreModsString(this.score.mods);
         const name = this.score.user.name;
-        const getScore = parseInt(this.score.score);
+        const mapScore = parseInt(this.score.score);
         const rank = this.score.rank;
         const pp = this.score.pp;
         // 谱面信息
@@ -36,15 +36,23 @@ class BeatmapObject {
         let output = "";
         if (beatmapMode === "Standard" && scoreMode !== "0") { // 转谱
             if (hasBeatmap) output = output + "谱面 " + beatmapSetId + " " + artist + " - " + title + "(" + creator + ")[" + diff + "] " + "(" + spinner + " spin) 的 " + scoreModeString + " 成绩：\n";
-            output = output + name + "\t " + " combo: " + combo + "\t score: " + cf.format_number(getScore) + "\t " + rank + "\t | " + mods.join("") + "\t " + pp + "pp\n";
+            output = output + name + "\t " + " combo: " + combo + "\t score: " + cf.format_number(mapScore) + "\t " + rank + "\t | " + mods.join("") + "\t " + pp + "pp\n";
         }
         else {
             if (hasBeatmap) output = output + "谱面 " + beatmapSetId + " " + artist + " - " + title + "(" + creator + ")[" + diff + "] " + "(" + spinner + " spin) 的成绩：\n";
-            output = output + name + "\t " + combo + "/" + maxCombo + "\t " + (accuracy * 100).toFixed(2) + "%\t " + cf.format_number(getScore) + "\t " + rank + "\t | " + mods.join("") + "\t " + pp + "pp\n";
+            output = output + name + "\t " + combo + "/" + maxCombo + "\t " + (accuracy * 100).toFixed(2) + "%\t " + cf.format_number(mapScore) + "\t " + rank + "\t | " + mods.join("") + "\t " + pp + "pp\n";
         }
 
         return output;
     }
+
+    getUserName() {
+        return this.score.user.name;
+    }
+    getScore() {
+        return parseInt(this.score.score);
+    }
+
 }
 
-module.exports = BeatmapObject;
+module.exports = ScoreObject;

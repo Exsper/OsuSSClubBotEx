@@ -16,6 +16,8 @@ class RunCommand {
             return await new getUserData().getData(osuApi, argObjects);
         else if (command.commandType === commandsInfo.apiType.scoreTop)
             return await new getScoreData().getTopData(osuApi, argObjects);
+        else if (command.commandType === commandsInfo.apiType.scoreVsTop)
+            return await new getScoreData().getVsTopData(osuApi, argObjects);
     }
 }
 
