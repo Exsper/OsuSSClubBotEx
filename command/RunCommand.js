@@ -3,6 +3,7 @@ const getBeatmapData = require("./api/beatmap/getBeatmapData");
 const getScoreData = require("./api/score/getScoreData");
 const getUserData = require("./api/user/getUserData");
 const getBestScoresData = require("./api/best/getBestScoresData");
+const getRecentScoresData = require("./api/recent/getRecentScoresData");
 
 class RunCommand {
     // TODO
@@ -23,6 +24,10 @@ class RunCommand {
             return await new getBestScoresData().getData(osuApi, argObjects);
         else if (command.commandType === commandsInfo.apiType.best)
             return await new getBestScoresData().getOneData(osuApi, argObjects);
+        else if (command.commandType === commandsInfo.apiType.recent)
+            return await new getRecentScoresData().getData(osuApi, argObjects);
+        else if (command.commandType === commandsInfo.apiType.recentPassed)
+            return await new getRecentScoresData().getPassedData(osuApi, argObjects);
     }
 }
 

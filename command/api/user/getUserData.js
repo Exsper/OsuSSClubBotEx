@@ -11,7 +11,8 @@ class getUserData {
         catch (ex) {
             delete argObject.k; // 不显示token
             if (ex.message === "Not found") return "找不到玩家 " + JSON.stringify(argObject) + "\n";
-            return "从Osu!api获取数据出错\n" + ex.message;
+            console.log("从Osu!api获取数据出错\n" + ex.message);
+            return "从Osu!api获取数据出错\n";
         }
     }
 

@@ -29,7 +29,7 @@ class BestScoresObject {
             const maxCombo = score.beatmap.maxCombo;
             const spinner = score.beatmap.objects.spinner;
             // 判断是不是转谱
-            const scoreMode = options[0].m;
+            const scoreMode = Array.isArray(options) ? options[0].m : options.m;
             let scoreModeString = "std";
             if (scoreMode === "1") scoreModeString = "taiko";
             else if (scoreMode === "2") scoreModeString = "catch";
