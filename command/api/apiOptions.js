@@ -24,7 +24,7 @@ class apiOptions {
             }
         }
         if (singlelimit) argObject.limit = singlelimit;
-        if (singlemods) argObject.mods = cf.getScoreMods(singlemods).toString();
+        if (singlemods) argObject.mods = cf.getScoreMods(singlemods.toUpperCase()).toString();
         if (singlemode) argObject.m = cf.getMode(singlemode);
         return argObject;
     }
@@ -34,14 +34,10 @@ class apiOptions {
         // 没有user参数
         if (this.user.length <= 0) argObjects.push(this.getOneArgObject(this.beatmap, undefined, this.limit, this.mods, this.mode));
         else {
-            if (this.user.isArray) {
-                this.user.forEach((singleuser) => {
-                    argObjects.push(this.getOneArgObject(this.beatmap, singleuser, this.limit, this.mods, this.mode));
-                });
-            }
-            else {
-                argObjects.push(this.getOneArgObject(this.beatmap, this.user, this.limit, this.mods, this.mode));
-            }
+
+            this.user.forEach((singleuser) => {
+                argObjects.push(this.getOneArgObject(this.beatmap, singleuser, this.limit, this.mods, this.mode));
+            });
         }
         return argObjects;
     }

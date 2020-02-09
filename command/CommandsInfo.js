@@ -64,7 +64,7 @@ function CommandsInfo() {
             note: this.help.args
         },
         {
-            info: '谱面成绩vs查询',
+            info: '谱面成绩vs查询',   // 暂时只做了2人对比，多人应该只要改一下正则就好了
             command: ['vs', 'svs', 'scorevs'],
             type: this.apiType.scoreVs,
             api: 'getScores',

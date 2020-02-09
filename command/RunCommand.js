@@ -10,7 +10,7 @@ class RunCommand {
         const commandsInfo = new CommandsInfo();
         if (command.commandType === commandsInfo.apiType.beatmap)
             return await new getBeatmapData().getData(osuApi, argObjects);
-        else if (command.commandType === commandsInfo.apiType.score)
+        else if ((command.commandType === commandsInfo.apiType.score) || (command.commandType === commandsInfo.apiType.scoreVs))
             return await new getScoreData().getData(osuApi, argObjects);
         else if (command.commandType === commandsInfo.apiType.user)
             return await new getUserData().getData(osuApi, argObjects);
