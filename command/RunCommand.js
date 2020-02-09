@@ -6,7 +6,6 @@ const getBestScoresData = require("./api/best/getBestScoresData");
 const getRecentScoresData = require("./api/recent/getRecentScoresData");
 
 class RunCommand {
-    // TODO
     async run(osuApi, command, argObjects) {
         // 下达任务
         const commandsInfo = new CommandsInfo();
@@ -28,6 +27,7 @@ class RunCommand {
             return await new getRecentScoresData().getData(osuApi, argObjects);
         else if (command.commandType === commandsInfo.apiType.recentPassed)
             return await new getRecentScoresData().getPassedData(osuApi, argObjects);
+        else return ""; // 未知指令
     }
 }
 

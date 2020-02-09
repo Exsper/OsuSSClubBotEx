@@ -130,6 +130,32 @@ function CommandsInfo() {
             note: this.help.args + this.help.userName
         }
     ];
+    this.botCommandType = {
+        bind: 'botbind',
+        unbind: 'botunbind'
+    };
+    this.botCommands = [
+        {
+            info: '绑定osu账号',
+            command: ['bind'],
+            type: this.botCommandType.bind,
+            argsInfo: '[user_id]',
+            args: ['orgArgs', 'u'],
+            argsFromUserInfo: [false, false],
+            reg: /^([^:+#]+)/i,
+            note: ""
+        },
+        {
+            info: '解绑osu账号',
+            command: ['unbind'],
+            type: this.botCommandType.unbind,
+            argsInfo: '',
+            args: ['orgArgs'],
+            argsFromUserInfo: [false],
+            reg: /^([^:+#]+)/i,
+            note: ""
+        },
+    ]
 }
 
 
