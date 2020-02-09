@@ -27,8 +27,8 @@ class ScoreObject {
         const maxCombo = this.score.beatmap.maxCombo;
         const spinner = this.score.beatmap.objects.spinner;
         // 判断是不是转谱
-        const scoreMode = options.m;
-        let scoreModeString = "";
+        const scoreMode = options[0].m;
+        let scoreModeString = "std";
         if (scoreMode === "1") scoreModeString = "taiko";
         else if (scoreMode === "2") scoreModeString = "catch";
         else if (scoreMode === "3") scoreModeString = "mania";
