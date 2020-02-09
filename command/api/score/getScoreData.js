@@ -29,6 +29,14 @@ class getScoreData {
         }
         return output;
     }
+
+    async getTopData(osuApi, argObjects) {
+        // limit = 1 即为最高分
+        argObjects[0].limit = 1;
+        let scoreObject = await this.getScoreObject(osuApi, argObjects[0]);
+        return scoreObject.toString(true, argObjects[0]);
+    }
+
 }
 
 
