@@ -10,20 +10,6 @@ class Command {
         this.errorMessage = "";
     }
 
-    /*
-    getCommandType() {
-        return this.commandType;
-    }
-    getCommandInfo() {
-        return this.commandInfo;
-    }
-    isCommand() {
-        return this.isCommand;
-    }
-    isError() {
-        return this.isError;
-    }
-    */
     getErrorMessage() {
         return this.errorMessage;
     }

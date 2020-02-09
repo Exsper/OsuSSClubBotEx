@@ -1,15 +1,19 @@
 const CommandsInfo = require("./CommandsInfo");
 const getBeatmapData = require("./api/beatmap/getBeatmapData");
 const getScoreData = require("./api/score/getScoreData");
+const getUserData = require("./api/user/getUserData");
 
 class RunCommand {
     // TODO
     async run(osuApi, command, argObjects) {
         // 下达任务
-        if (command.commandType === new CommandsInfo().apiType.beatmap)
+        const commandsInfo = new CommandsInfo();
+        if (command.commandType === commandsInfo.apiType.beatmap)
             return await new getBeatmapData().getData(osuApi, argObjects);
-        else if (command.commandType === new CommandsInfo().apiType.score)
+        else if (command.commandType === commandsInfo.apiType.score)
             return await new getScoreData().getData(osuApi, argObjects);
+        else if (command.commandType === commandsInfo.apiType.user)
+            return await new getUserData().getData(osuApi, argObjects);
     }
 }
 

@@ -46,6 +46,7 @@ class CommandObject {
         // 帮助
         if (commandString === "help") {
             let command = this.getCommandInfoFromApi(commandsInfo, argsString);
+            if (!argsString) return "输入 "+commandsInfo.prefix+"help + 具体指令 来查看指令功能";
             if (!command.isCommand) return "未实现的指令：" + argsString;
             else return command.getHelpContent();
         }
