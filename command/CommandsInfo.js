@@ -1,7 +1,8 @@
 // nodejs用不了es6模块，好气哦
 
 function CommandsInfo() {
-    this.prefix = '$$';
+    this.prefix = '$';
+    this.prefix2 = '￥';
     this.help = {
         args: "[]中的参数为必要参数，()中的参数为可选参数\n",
         userName: "绑定后username可以使用'me'替代或直接省略，纯数字id可以尝试在名字前后加上\"号\n"
@@ -27,7 +28,7 @@ function CommandsInfo() {
             argsInfo: '[beatmap_id](+mods)(:mode)',
             args: ['orgArgs', 'b', 'mods', 'm'],
             argsFromUserInfo: [false, true, false, false],    // mode 不要指定模式
-            reg: /^([0-9]+)[\+]?([a-zA-Z0-9]+)?[:]?(.+)?/i,
+            reg: /^([0-9]+)[\+]?([a-zA-Z0-9]+)?[:：]?(.+)?/i,
             note: this.help.args
         },
         {
@@ -38,7 +39,7 @@ function CommandsInfo() {
             argsInfo: '(user_id/"username")(:mode)',
             args: ['orgArgs', 'u', 'm'],
             argsFromUserInfo: [false, true, true],
-            reg: /^([^:+#]+)?[:]?(.+)?/i,
+            reg: /^([^:+#]+)?[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         },
         {
@@ -49,7 +50,7 @@ function CommandsInfo() {
             argsInfo: '[beatmap_id] (user_id/"username")(+mods)(:mode)',
             args: ['orgArgs', 'b', 'u', 'mods', 'm'],
             argsFromUserInfo: [false, false, true, false, true],
-            reg: /^([0-9]+)([^:+#]+)?[\+]?([a-zA-Z0-9]+)?[:]?(.+)?/i,
+            reg: /^([0-9]+)([^:+#]+)?[\+]?([a-zA-Z0-9]+)?[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         },
         {
@@ -60,7 +61,7 @@ function CommandsInfo() {
             argsInfo: '[beatmap_id](+mods)(:mode)',
             args: ['orgArgs', 'b', 'mods', 'm'],
             argsFromUserInfo: [false, false, false, true],
-            reg: /^([0-9]+)[\+]?([a-zA-Z0-9]+)?[:]?(.+)?/i,
+            reg: /^([0-9]+)[\+]?([a-zA-Z0-9]+)?[:：]?(.+)?/i,
             note: this.help.args
         },
         {
@@ -71,7 +72,7 @@ function CommandsInfo() {
             argsInfo: '[beatmap_id] (user_id/"username")|[user_id/"username"](+mods)(:mode)',
             args: ['orgArgs', 'b', 'u', 'u2', 'mods', 'm'],
             argsFromUserInfo: [false, false, true, false, false, true],
-            reg: /^([0-9]+)([^:+#\|]+)?\|([^:+#\|]+)[\+]?([a-zA-Z0-9]+)?[:]?(.+)?/i,
+            reg: /^([0-9]+)([^:+#\|]+)?\|([^:+#\|]+)[\+]?([a-zA-Z0-9]+)?[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         },
         {
@@ -82,7 +83,7 @@ function CommandsInfo() {
             argsInfo: '[beatmap_id] (user_id/"username")(+mods)(:mode)',
             args: ['orgArgs', 'b', 'u', 'mods', 'm'],
             argsFromUserInfo: [false, false, true, false, true],
-            reg: /^([0-9]+)([^:+#]+)?[\+]?([a-zA-Z0-9]+)?[:]?(.+)?/i,
+            reg: /^([0-9]+)([^:+#]+)?[\+]?([a-zA-Z0-9]+)?[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         },
         {
@@ -93,7 +94,7 @@ function CommandsInfo() {
             argsInfo: '(user_id/"username")[#number](:mode)',
             args: ['orgArgs', 'u', 'limit', 'm'],
             argsFromUserInfo: [false, true, false, true],
-            reg: /^([^:+#]+)?[#]([0-9]+)[:]?(.+)?/i,
+            reg: /^([^:+#]+)?[#]([0-9]+)[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         },
         {
@@ -104,7 +105,7 @@ function CommandsInfo() {
             argsInfo: '(user_id/"username")(:mode)',
             args: ['orgArgs', 'u', 'm'],
             argsFromUserInfo: [false, true, true],
-            reg: /^([^:+#]+)?[:]?(.+)?/i,
+            reg: /^([^:+#]+)?[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         },
         {
@@ -115,7 +116,7 @@ function CommandsInfo() {
             argsInfo: '(user_id/"username")(:mode)',
             args: ['orgArgs', 'u', 'm'],
             argsFromUserInfo: [false, true, true],
-            reg: /^([^:+#]+)?[:]?(.+)?/i,
+            reg: /^([^:+#]+)?[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         },
         {
@@ -126,7 +127,7 @@ function CommandsInfo() {
             argsInfo: '(user_id/"username")(:mode)',
             args: ['orgArgs', 'u', 'm'],
             argsFromUserInfo: [false, true, true],
-            reg: /^([^:+#]+)?[:]?(.+)?/i,
+            reg: /^([^:+#]+)?[:：]?(.+)?/i,
             note: this.help.args + this.help.userName
         }
     ];
@@ -143,7 +144,7 @@ function CommandsInfo() {
             argsInfo: '[user_id](:mode)',
             args: ['orgArgs', 'u', 'm'],
             argsFromUserInfo: [false, false, false],
-            reg: /^([^:+#]+)[:]?(.+)?/i,
+            reg: /^([^:+#]+)[:：]?(.+)?/i,
             note: ""
         },
         {

@@ -37,7 +37,7 @@ class Command {
     getApiOptions(argsString, userOsuInfo) {
         const mr = this.commandInfo.reg.exec(argsString);
         if (mr === null) {
-            setError("参数格式解析错误：" + argsString);
+            this.setError("参数格式解析错误：" + argsString);
             return new ApiOptions();
         }
         let args = {};
@@ -64,7 +64,7 @@ class Command {
     getBotOptions(argsString) {   // 暂时用不到userOsuInfo
         const mr = this.commandInfo.reg.exec(argsString);
         if (mr === null) {
-            setError("参数格式解析错误：" + argsString);
+            this.setError("参数格式解析错误：" + argsString);
             return null;
         }
         let args = {};
