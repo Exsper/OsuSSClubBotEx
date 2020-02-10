@@ -52,10 +52,10 @@ class UserInfo {
         let userData = await this.getOsuIdName(osuApi, osuInfo, mode);
         if (!userData) return "无法获取到 " + osuInfo + " 的信息";
         let numAffected = await nedb.update({ qqId: qqId }, { $set: { osuId: userData.osuId, osuName: userData.osuName } });
-        if (numAffected <= 0) return "绑定新账号失败";
+        if (numAffected <= 0) return "绑定新账号" + userData.osuName + "失败";
         else {
             if (numAffected > 1) console.log("Warning: 设置了 " + numAffected + " 个 " + qqId + " 的osu账号信息")
-            return "绑定新账号成功";
+            return "绑定新账号" + userData.osuName + "成功";
         }
     }
 
@@ -95,7 +95,7 @@ class UserInfo {
         if (numAffected <= 0) return "设置默认游戏模式失败";
         else {
             if (numAffected > 1) console.log("Warning: 设置了 " + numAffected + " 个 " + qqId + " 的默认游戏模式")
-            return "设置默认游戏模式成功："+cf.getModeString(mode);
+            return "设置默认游戏模式成功：" + cf.getModeString(mode);
         }
     }
 

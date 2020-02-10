@@ -1,7 +1,8 @@
 const RespondObject = require('./RespondObject');
 
-// 读取osuToken
-const osuToken = require('./osuToken.json').osuToken;
+
+const osuToken = require('./settings.json').osuToken;
+const koishiAppSettings = require('./settings.json').koishiApp;
 
 
 // 引入osuAPI
@@ -15,11 +16,50 @@ const osuApi = new osu.Api(osuToken, {
 	parseNumeric: false // Parse numeric values into numbers/floats, excluding ids
 });
 
-
+// 加载nedb
 const nedb = require('./database/nedb')(__dirname + '/database/data/save.db');
 
 
 
+// 启动koishi
+const { App } = require('koishi');
+
+
+function start() {
+	try {
+		let koishiApp = new App({
+			type: koishiAppSettings.type,
+			port: koishiAppSettings.port,
+			server: koishiAppSettings.server
+		});
+		koishiApp.receiver.on('message', async function (meta) {
+			let respondObject = new RespondObject(meta, nedb, osuApi, meta.message);
+			await respondObject.sendReply();
+		});
+		koishiApp.start();
+	}
+	catch (ex) {
+		console.log(ex);
+	}
+}
+
+start();
+
+/*
+const readline = require('readline');
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+rl.on('line', async function (line) {
+
+});
+rl.on('close', function () {
+    process.exit();
+});
+*/
+
+/*
 function meta(qqId) {
 	this.userId = qqId;
 }
@@ -44,3 +84,6 @@ rl.on('line', async function (line) {
 	let respondObject = new RespondObject(new meta(myQQ), nedb, osuApi, line);
 	await respondObject.sendReply();
 });
+
+
+*/

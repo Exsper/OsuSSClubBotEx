@@ -13,7 +13,7 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-osuToken.json
+settings.json
 database/data/save.db
 
 # Build results
