@@ -132,29 +132,40 @@ function CommandsInfo() {
     ];
     this.botCommandType = {
         bind: 'botbind',
-        unbind: 'botunbind'
+        unbind: 'botunbind',
+        mode: 'botmode'
     };
     this.botCommands = [
         {
             info: '绑定osu账号',
-            command: ['bind'],
+            command: ['bind', 'set', 'setid'],
             type: this.botCommandType.bind,
-            argsInfo: '[user_id]',
-            args: ['orgArgs', 'u'],
-            argsFromUserInfo: [false, false],
-            reg: /^([^:+#]+)/i,
+            argsInfo: '[user_id](:mode)',
+            args: ['orgArgs', 'u', 'm'],
+            argsFromUserInfo: [false, false, false],
+            reg: /^([^:+#]+)[:]?(.+)?/i,
             note: ""
         },
         {
             info: '解绑osu账号',
-            command: ['unbind'],
+            command: ['unbind', 'unset'],
             type: this.botCommandType.unbind,
-            argsInfo: '',
-            args: ['orgArgs'],
-            argsFromUserInfo: [false],
-            reg: /^([^:+#]+)/i,
+            argsInfo: '无参数',
+            args: ['orgArgs', 'useless'],
+            argsFromUserInfo: [false, false],
+            reg: /^(.*)/i,
             note: ""
         },
+        {
+            info: '设置默认mode',
+            command: ['mode'],
+            type: this.botCommandType.mode,
+            argsInfo: '(mode)',
+            args: ['orgArgs', 'm'],
+            argsFromUserInfo: [false, false],
+            reg: /^(.+)/i,
+            note: ""
+        }
     ]
 }
 

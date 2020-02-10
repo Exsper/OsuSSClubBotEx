@@ -5,6 +5,7 @@ An osu! QQ bot prefers to SS rank
 
 ## npm
 ```sh
+npm install nedb
 npm install node-osu  
 npm install koishi  
 ```

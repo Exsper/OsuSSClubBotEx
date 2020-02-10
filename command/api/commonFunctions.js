@@ -104,7 +104,7 @@ class commonFunctions {
         return sum;
     }
 
-    // mode字符串
+    // String转mode
     getMode(modeString) {
         let s = modeString.trim().toLowerCase();
         if (s === "0" || s === "1" || s === "2" || s === "3") return s;
@@ -124,8 +124,19 @@ class commonFunctions {
         else if (s === "t") return "1";
         else if (s === "c") return "2";
         else if (s === "m") return "3";
-        else return s;
+        //else return s;
+        else return "0";
     }
+    // mode转String
+    getModeString(mode) {
+        if (mode === "0") return "Standard";
+        else if (mode === "1") return "Taiko";
+        else if (mode === "2") return "Catch The Beat";
+        else if (mode === "3") return "Mania";
+        //else return s;
+        else return "未知";
+    }
+
 
 
 }

@@ -1,11 +1,16 @@
 const CommandsInfo = require("./CommandsInfo");
 const Command = require("./Command");
-const RunCommand = require("./RunCommand");
+const RunApiCommand = require("./RunApiCommand");
+const RunBotCommand = require("./RunBotCommand");
 
 class CommandObject {
-    constructor(msg) {
+    constructor(meta, msg) {
+        this.meta = meta;
         this.msg = msg.trim();
+        this.apiClass = "api";
+        this.botClass = "bot";
     }
+
 
     getCommandPrefixIndex(commandsInfo) {
         return this.msg.indexOf(commandsInfo.prefix);
@@ -29,7 +34,17 @@ class CommandObject {
         const apis = commandsInfo.apiCommands;
         for (let api of apis) {
             if (api.command.includes(commandString)) {
-                return new Command(api.type, api);
+                return new Command(this.apiClass, api.type, api);
+            }
+        }
+        return new Command().setNotCommand();
+    }
+
+    getCommandInfoFromBot(commandsInfo, commandString) {
+        const botComs = commandsInfo.botCommands;
+        for (let c of botComs) {
+            if (c.command.includes(commandString)) {
+                return new Command(this.botClass, c.type, c);
             }
         }
         return new Command().setNotCommand();
@@ -37,7 +52,7 @@ class CommandObject {
 
 
 
-    async execute(osuApi, userOsuInfo) {
+    async execute(osuApi, userOsuInfo, nedb) {
         const commandsInfo = new CommandsInfo()
         const prefixIndex = this.getCommandPrefixIndex(commandsInfo);
         if (prefixIndex !== 0) return "";
@@ -45,20 +60,30 @@ class CommandObject {
         const argsString = this.getCommandArgsString(commandString);
         // 帮助
         if (commandString === "help") {
+            if (!argsString) return "输入 " + commandsInfo.prefix + "help + 具体指令 来查看指令功能";
             let command = this.getCommandInfoFromApi(commandsInfo, argsString);
-            if (!argsString) return "输入 "+commandsInfo.prefix+"help + 具体指令 来查看指令功能";
+            if (!command.isCommand) command = this.getCommandInfoFromBot(commandsInfo, argsString);
             if (!command.isCommand) return "未实现的指令：" + argsString;
             else return command.getHelpContent();
         }
         // 查找指令
         let command = this.getCommandInfoFromApi(commandsInfo, commandString);
-        if (!command.isCommand) return "";
-        let apiOptions = command.getApiOptions(argsString, userOsuInfo);
-        if (command.isError) return command.getErrorMessage();
-        let argObjects = apiOptions.getArgObjects();
-        return await new RunCommand().run(osuApi, command, argObjects);
+        if (!command.isCommand) {
+            command = this.getCommandInfoFromBot(commandsInfo, commandString);
+            if (!command.isCommand) return "";
+            else {
+                let argObjects = command.getBotOptions(argsString);
+                if (command.isError) return command.getErrorMessage();
+                return await new RunBotCommand().run(this.meta, osuApi, command, argObjects, nedb);
+            }
+        }
+        else {
+            let apiOptions = command.getApiOptions(argsString, userOsuInfo);
+            if (command.isError) return command.getErrorMessage();
+            let argObjects = apiOptions.getArgObjects();
+            return await new RunApiCommand().run(osuApi, command, argObjects);
+        }
     }
-
 }
 
 

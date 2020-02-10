@@ -12,7 +12,9 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+
 osuToken.json
+database/data/save.db
 
 # Build results
 [Dd]ebug/
@@ -339,4 +341,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
 

@@ -11,7 +11,7 @@ class getBeatmapData {
         catch (ex) {
             // console.log(argObject);
             // console.log(ex);
-            delete argObject.k; // 不显示token
+            if (argObject) delete argObject.k; // 不显示token
             if (ex.message === "Not found") return "找不到谱面 " + JSON.stringify(argObject) + "\n";
             console.log("从Osu!api获取数据出错\n" + ex.message);
             return "从Osu!api获取数据出错\n";

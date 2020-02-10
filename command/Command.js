@@ -2,7 +2,8 @@ const ApiOptions = require("./api/apiOptions");
 
 
 class Command {
-    constructor(commandType, commandInfo) {
+    constructor(commandClass, commandType, commandInfo) {
+        this.commandClass = commandClass;
         this.commandType = commandType;
         this.commandInfo = commandInfo;
         this.isCommand = true;
@@ -41,9 +42,9 @@ class Command {
         }
         let args = {};
         for (let i = 1; i < mr.length; ++i) {
-            if (mr[i] === undefined) {
+            let key = this.commandInfo.args[i];
+            if (mr[i] === undefined || mr[i] === "null") {
                 if (!this.commandInfo.argsFromUserInfo[i]) continue;
-                let key = this.commandInfo.args[i];
                 let value = "";
                 if (userOsuInfo.osuId > 0 && this.commandInfo.args[i] === "u") value = userOsuInfo.osuId;
                 else if (userOsuInfo.defaultMode && this.commandInfo.args[i] === "m") value = userOsuInfo.defaultMode;
@@ -51,13 +52,34 @@ class Command {
                 Object.assign(args, { [key]: value });
             }
             else {
-                let key = this.commandInfo.args[i];
                 Object.assign(args, { [key]: mr[i].trim() });
             }
         }
+        if (args.u === "me") args.u = userOsuInfo.osuId;
         let user = [args.u, args.u2];
         user = user.filter(item => item); // 去除空值
         return new ApiOptions(args.b, user, args.limit, args.mods, args.m);
+    }
+
+    getBotOptions(argsString) {   // 暂时用不到userOsuInfo
+        const mr = this.commandInfo.reg.exec(argsString);
+        if (mr === null) {
+            setError("参数格式解析错误：" + argsString);
+            return null;
+        }
+        let args = {};
+        for (let i = 1; i < mr.length; ++i) {
+            let key = this.commandInfo.args[i];
+            if (mr[i] === undefined) {
+                let value = "";
+                Object.assign(args, { [key]: value });
+            }
+            else {
+                Object.assign(args, { [key]: mr[i].trim() });
+            }
+        }
+        delete args.useless;
+        return args;
     }
 
 }

@@ -5,7 +5,7 @@ const getUserData = require("./api/user/getUserData");
 const getBestScoresData = require("./api/best/getBestScoresData");
 const getRecentScoresData = require("./api/recent/getRecentScoresData");
 
-class RunCommand {
+class RunApiCommand {
     async run(osuApi, command, argObjects) {
         // 下达任务
         const commandsInfo = new CommandsInfo();
@@ -31,4 +31,4 @@ class RunCommand {
     }
 }
 
-module.exports = RunCommand;
+module.exports = RunApiCommand;

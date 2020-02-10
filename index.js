@@ -16,11 +16,12 @@ const osuApi = new osu.Api(osuToken, {
 });
 
 
+const nedb = require('./database/nedb')(__dirname + '/database/data/save.db');
 
 
 
 function meta(qqId) {
-    this.userId = qqId;
+	this.userId = qqId;
 }
 meta.prototype.$send = function (s) { console.log(s); };
 meta.prototype.$ban = function (t) { console.log("你已被禁言 " + t + " 秒"); };
@@ -31,6 +32,15 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 rl.on('line', async function (line) {
-    let respondObject = new RespondObject(new meta(123), osuApi, line);
-    await respondObject.sendReply();
+	let myQQ = 45818;
+    if (line === "qq2") {
+        myQQ = 2;
+        console.log("你的QQ号是2了");
+    }
+    else if (line === "qq1") {
+        myQQ = 1;
+        console.log("你的QQ号是1了");
+    }
+	let respondObject = new RespondObject(new meta(myQQ), nedb, osuApi, line);
+	await respondObject.sendReply();
 });
