@@ -25,6 +25,11 @@ const nedb = require('./database/nedb')(__dirname + '/database/data/save.db');
 const { App } = require('koishi');
 
 
+function escape2Html(str) {
+	var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
+	return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+   }
+
 function start() {
 	try {
 		let koishiApp = new App({
@@ -33,7 +38,7 @@ function start() {
 			server: koishiAppSettings.server
 		});
 		koishiApp.receiver.on('message', async function (meta) {
-			let respondObject = new RespondObject(meta, nedb, osuApi, meta.message);
+			let respondObject = new RespondObject(meta, nedb, osuApi, escape2Html(meta.message));
 			await respondObject.sendReply();
 		});
 		koishiApp.start();
