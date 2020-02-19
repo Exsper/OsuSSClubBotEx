@@ -19,6 +19,8 @@ const osuApi = new osu.Api(osuToken, {
 // 加载nedb
 const nedb = require('./database/nedb')(__dirname + '/database/data/save.db');
 
+const CQCode = require('koishi-utils').CQCode;
+
 
 
 // 启动koishi
@@ -26,9 +28,18 @@ const { App } = require('koishi');
 
 
 function escape2Html(str) {
-	var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
-	return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
-   }
+	var arrEntities = { 'lt': '<', 'gt': '>', 'nbsp': ' ', 'amp': '&', 'quot': '"' };
+	return str.replace(/&(lt|gt|nbsp|amp|quot);/ig, function (all, t) { return arrEntities[t]; });
+}
+function removeReturn(str) {
+	return str.replace(/\r?\n/g, "");
+}
+function getTextFromMessage(message) {
+	let cqCodes = CQCode.parseAll(message);
+	for(let cqCode of cqCodes) {
+		if (cqCode.type === 'text') return removeReturn(escape2Html(cqCode.data.text));
+	}
+}
 
 function start() {
 	try {
@@ -38,8 +49,11 @@ function start() {
 			server: koishiAppSettings.server
 		});
 		koishiApp.receiver.on('message', async function (meta) {
-			let respondObject = new RespondObject(meta, nedb, osuApi, escape2Html(meta.message));
-			await respondObject.sendReply();
+			let ask = getTextFromMessage(meta.message);
+			if (ask) {
+				let respondObject = new RespondObject(meta, nedb, osuApi, escape2Html(meta.message));
+				await respondObject.sendReply();
+			}
 		});
 		koishiApp.start();
 	}
