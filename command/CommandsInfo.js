@@ -33,7 +33,7 @@ function CommandsInfo() {
         },
         {
             info: '玩家查询',
-            command: ['u', 'user', 'p', 'player', 'statme', 'ume'],
+            command: ['u', 'user', 'p', 'player', 'stat', 'statme', 'ume'],
             type: this.apiType.user,
             //api: 'getUser',
             argsInfo: '(user_id/"username")(:mode)',
@@ -88,7 +88,7 @@ function CommandsInfo() {
         },
         {
             info: 'bp成绩查询',
-            command: ['bp', 'best'],
+            command: ['bp', 'best', 'bpme'],
             type: this.apiType.best,
             //api: 'getUserBest',
             argsInfo: '(user_id/"username")[#number](:mode)',
@@ -99,7 +99,7 @@ function CommandsInfo() {
         },
         {
             info: 'bp列表查询',
-            command: ['bbp', 'bests'],
+            command: ['bbp', 'bests', 'mybp'],
             type: this.apiType.bestList,
             //api: 'getUserBest',
             argsInfo: '(user_id/"username")(:mode)',

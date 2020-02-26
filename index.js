@@ -3,14 +3,15 @@ const RespondObject = require('./RespondObject');
 
 const osuToken = require('./settings.json').osuToken;
 const koishiAppSettings = require('./settings.json').koishiApp;
-
+const baseUrl = require('./settings.json').baseUrl;
 
 // 引入osuAPI
 // https://github.com/brussell98/node-osu
 // https://github.com/ppy/osu-api/wiki
 const osu = require('node-osu');
-const osuApi = new osu.Api(osuToken, {
-	// baseUrl: sets the base api url (default: https://osu.ppy.sh/api)
+const osuApi = new osu.Api("", osuToken, {
+	baseUrl: baseUrl,
+	beatmapBaseUrl: "https://osu.ppy.sh/api",
 	notFoundAsError: true, // Throw an error on not found instead of returning nothing. (default: true)
 	completeScores: true, // When fetching scores also fetch the beatmap they are for (Allows getting accuracy) (default: false)
 	parseNumeric: false // Parse numeric values into numbers/floats, excluding ids
@@ -49,11 +50,14 @@ function start() {
 			server: koishiAppSettings.server
 		});
 		koishiApp.receiver.on('message', async function (meta) {
+			console.log(meta.message);
+			
 			let ask = getTextFromMessage(meta.message);
 			if (ask) {
 				let respondObject = new RespondObject(meta, nedb, osuApi, escape2Html(meta.message));
 				await respondObject.sendReply();
 			}
+			
 		});
 		koishiApp.start();
 	}
